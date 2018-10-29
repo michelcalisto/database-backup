@@ -1,8 +1,8 @@
 #!/bin/bash
 #
-# Title		: backup-db.sh
-# Description	: Script para el respaldo de bases de datos.
-# Author	: laloinsane
+# Title		: database_backup.sh
+# Description	: Script para el respaldo y compresión de bases de datos.
+# Author	: Michel Calisto
 # Version	: 0.1
 
 fechaformato1=`date +%d-%m-%Y_%H-%M-%S`
