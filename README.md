@@ -1,4 +1,4 @@
-# Backup-db
+# Database_backup
 Script para el respaldo y compresión de bases de datos.
 
 # Modificaciones antes de utilizar
@@ -7,5 +7,5 @@ y remplaze los textos ```"xxx"``` de la function respaldar, en el siguiente orde
 
 # ¿Como utilizar el script?
 Para utilizar el script, diríjase al directorio donde se descargo el repositorio, luego con la ayuda de la 
-consola ejecute ```./backup-db.sh "ruta" "carpeta"``` siendo carpeta, el directorio donde se alojarán los respaldos, 
+consola ejecute ```./database_backup.sh "ruta" "carpeta"``` siendo carpeta, el directorio donde se alojarán los respaldos, 
 mientras que ruta es donde se ubicará carpeta.
