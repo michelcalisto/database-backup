@@ -106,8 +106,27 @@ EOF
 	fi
 }
 
+function isEmptyCollectionBackUp {
+    mongo $database --eval "db.gists.find().count()" > /dev/null
+    if [ $? = 0 ]; then
+		echo "Gist subido satisfactioriamente."
+        let count=`mongo $database --eval "db.gists.find().count()" --quiet` 
+        if [ $count = 0 ]; then
+            echo "0 colec"
+        else
+            echo "1 o mas"
+        fi
+	else
+		echo "Error al subir el Gist." 1>&2
+		exit 1
+	fi
+
+}
+
+# Main 
 if [ $# -eq 4 ]; then
-	main
+    #main
+	isEmptyCollectionBackUp
 else
 	echo "Error, debes introducir cuatro parametros" 1>&2
 	exit 1
