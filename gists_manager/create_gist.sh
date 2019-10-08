@@ -12,7 +12,7 @@ database=$3
 collection=$4
 path="/tmp/$database"
 
-# Funciones
+# Functions
 function isEmptyCollection {
     mongo $database --eval "db.gists.find().count()" > /dev/null
     if [ $? = 0 ]; then
@@ -93,7 +93,7 @@ function updateJSON {
 
 function uploadGist {
 	touch $path/upload.json
-	curl --user "$user:$password" --data @$path/complete_json.json https://api.github.com/gists > $path/upload.json
+	curl --user "$user:$password" --data @$path/complete_json.json -X POST https://api.github.com/gists > $path/upload.json
 	if [ $? = 0 ]; then
 		echo "Gist subido satisfactioriamente."
         id=$(grep -Eo '["][a-z,A-Z,0-9]{32}["]' $path/upload.json | grep -Eo '[a-z,A-Z,0-9]{32}')
