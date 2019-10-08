@@ -11,6 +11,8 @@ password=$2
 database=$3
 collection=$4
 path="/tmp/$database"
+description=$5
+file_name=$6
 
 # Functions
 function isEmptyCollection {
@@ -67,10 +69,10 @@ function createDefaultJSON {
 	touch $path/default.json
 	cat > $path/default.json << EOF
 {
-  "description": "Descripción",
+  "description": "$description",
   "public": true,
   "files": {
-    "wena.json": {
+    "$file_name.json": {
       "content": "content_json"
     }
   }
@@ -116,9 +118,9 @@ EOF
 }
 
 # Main 
-if [ $# -eq 4 ]; then
+if [ $# -eq 6 ]; then
 	isEmptyCollection
 else
-	echo "Error, debes introducir cuatro parametros" 1>&2
+	echo "Error, debes introducir seis parametros" 1>&2
 	exit 1
 fi
