@@ -16,7 +16,7 @@ file_name=$6
 
 # Functions
 function isEmptyCollection {
-    mongo $database --eval "db.gists.find().count()" > /dev/null
+    mongo $database --eval "db.$collection.find().count()" > /dev/null
     if [ $? = 0 ]; then
         let count=`mongo $database --eval "db.$collection.find().count()" --quiet` 
         if [ $count = 0 ]; then
