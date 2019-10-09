@@ -42,6 +42,6 @@ function deleteGist {
 if [ $# -eq 4 ]; then
 	isEmptyCollection
 else
-	echo "Erro!!! debes introducir cuatro parametros." 1>&2
+	echo "Error!!! debes introducir cuatro parametros." 1>&2
 	exit 1
 fi

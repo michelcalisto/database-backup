@@ -5,13 +5,15 @@
 # Author	: Michel Calisto
 # Version	: 0.1
 
+# Variables
+ruta=$1
+carpeta=$2
 fechaformato1=`date +%d-%m-%Y_%H-%M-%S`
 fechaformato2=`date +%d/%m/%Y`
 horaformato2=`date +%T`
 archivo="backupdb_$fechaformato1"
-ruta=$1
-carpeta=$2
 
+# Functions
 function comprobarMysqlDump {
 	if [ $? != 0 ]
 	then
@@ -38,6 +40,7 @@ function respaldar {
 	comprobarGzip
 }
 
+# Main
 if [ $# -eq 2 ]
 then
 	if [ -d "$ruta" ]
@@ -53,10 +56,10 @@ then
 			respaldar
 		fi
 	else
-		echo "No existe la ruta señalada" 1>&2
+		echo "No existe la ruta señalada." 1>&2
 		exit 1
 	fi
 else
-	echo "Error, debes introducir dos parametros" 1>&2
+	echo "Error!!! debes introducir dos parametros." 1>&2
 	exit 1
 fi

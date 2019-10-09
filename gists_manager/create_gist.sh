@@ -10,9 +10,9 @@ user=$1
 password=$2
 database=$3
 collection=$4
-path="/tmp/$database"
 description=$5
 file_name=$6
+path="/tmp/$database"
 
 # Functions
 function isEmptyCollection {
@@ -45,7 +45,7 @@ function createEnviroment {
 function exportCollection {
 	mongoexport --db $database --collection $collection --out "$path/gist_manager.json" &>/dev/null
 	if [ $? = 0 ]; then
-		echo "Colección exportada satisfactoriamente"
+		echo "Colección exportada satisfactoriamente."
 		convertStringJSON
 	else
 		echo "Error!!! al exportar la colección." 1>&2

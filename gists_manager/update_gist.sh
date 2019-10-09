@@ -10,11 +10,11 @@ user=$1
 password=$2
 database=$3
 collection=$4
-path="/tmp/$database"
 description=$5
 file_name=$6
 id=$7
 file_name_old=$8
+path="/tmp/$database"
 
 # Functions
 function isEmptyCollection {
