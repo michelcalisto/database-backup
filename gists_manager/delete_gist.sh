@@ -32,6 +32,19 @@ function deleteGist {
     curl --user "$user:$password" -X DELETE https://api.github.com/gists/$id
     if [ $? = 0 ]; then
 		echo "Gist eliminado de GitHub satisfactioriamente."
+		mongo mongodb://localhost/$database <<EOF
+db.gists.remove(
+{
+    id: "$id"    
+})
+EOF
+        if [ $? = 0 ]; then
+            echo "Gist de la base de datos eliminado satisfactioriamente."
+            rm -rf $path
+        else
+            echo "Error!!! al eliminar el Gist de la base de datos." 1>&2
+            exit 1
+        fi
 	else
 		echo "Error!!! al eliminar el Gist de GitHub." 1>&2
 		exit 1
