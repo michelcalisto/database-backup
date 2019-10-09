@@ -100,10 +100,11 @@ function updateJSON {
 
 function uploadGist {
 	touch $path/upload.json
-	curl --user "$user:$password" --data @$path/complete_json.json -X PATCH https://api.github.com/gists/$id
+	curl --user "$user:$password" --data @$path/complete_json.json -X PATCH https://api.github.com/gists/$id > $path/upload.json
 	if [ $? = 0 ]; then
 		echo "Gist de GitHub actualizado satisfactioriamente."
-        		mongo mongodb://localhost/$database <<EOF
+		raw=`grep -Eo "(https:\/\/gist\.githubusercontent\.com\/)$user[\/]{1}[a-z,A-Z,0-9]{32}[\/]{1}(raw)[\/]{1}[a-z,A-Z,0-9]{40}[\/]{1}($file_name.json)" $path/upload.json`
+        mongo mongodb://localhost/$database <<EOF
 db.gists.update(
 {
     id: "$id"    
@@ -111,11 +112,13 @@ db.gists.update(
 {
 	id: "$id",
     description: "$description",
-    name: "$file_name"
+    name: "$file_name",
+	raw: "$raw"
 })
 EOF
         if [ $? = 0 ]; then
             echo "Gist de la base de datos actualizado satisfactioriamente."
+			echo "Raw URL: "$raw
             rm -rf $path
         else
             echo "Error!!! al actualizar el Gist de la base de datos." 1>&2

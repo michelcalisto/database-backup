@@ -99,17 +99,20 @@ function uploadGist {
 	if [ $? = 0 ]; then
 		echo "Gist agregado a GitHub satisfactioriamente."
         id=$(grep -Eo '["][a-z,A-Z,0-9]{32}["]' $path/upload.json | grep -Eo '[a-z,A-Z,0-9]{32}')
+		raw=`grep -Eo "(https:\/\/gist\.githubusercontent\.com\/)$user[\/]{1}[a-z,A-Z,0-9]{32}[\/]{1}(raw)[\/]{1}[a-z,A-Z,0-9]{40}[\/]{1}($file_name.json)" $path/upload.json`
 		mongo mongodb://localhost/$database <<EOF
 db.gists.insert(
 {
 	id: "$id",
     description: "$description",
-    name: "$file_name"
+    name: "$file_name",
+	raw: "$raw"
 })
 EOF
         if [ $? = 0 ]; then
             echo "Gist agregado a la base de datos satisfactioriamente."
-            rm -rf $path
+			echo "Raw URL: "$raw
+			rm -rf $path
         else
             echo "Error!!! al agregar el Gist a la base de datos." 1>&2
             exit 1
