@@ -101,7 +101,9 @@ function uploadGist {
         id=$(grep -Eo '["][a-z,A-Z,0-9]{32}["]' $path/upload.json | grep -Eo '[a-z,A-Z,0-9]{32}')
 		mongo mongodb://localhost/$database <<EOF
 db.gists.insert({
-	id: "$id"
+	id: "$id",
+    description: "$description",
+    name: "$file_name"
 })
 EOF
         if [ $? = 0 ]; then
