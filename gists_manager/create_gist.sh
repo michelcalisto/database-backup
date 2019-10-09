@@ -20,13 +20,13 @@ function isEmptyCollection {
     if [ $? = 0 ]; then
         let count=`mongo $database --eval "db.$collection.find().count()" --quiet` 
         if [ $count = 0 ]; then
-            echo "Error la coleción se encuentra vacía." 1>&2
+            echo "Error!!! la colección se encuentra vacía." 1>&2
 		    exit 1
         else
             createEnviroment
         fi
 	else
-		echo "Error en la conexion con la base de datos." 1>&2
+		echo "Error!!! en la conexión con la base de datos." 1>&2
 		exit 1
 	fi
 }
@@ -48,7 +48,7 @@ function exportCollection {
 		echo "Colección exportada satisfactoriamente"
 		convertStringJSON
 	else
-		echo "Error al exportar la colección." 1>&2
+		echo "Error!!! al exportar la colección." 1>&2
 		exit 1
 	fi
 }
@@ -57,10 +57,10 @@ function convertStringJSON {
     touch $path/string_json.json
 	sed -e 's/"/\\"/g' -e 's/0}/0}\\n/g' $path/gist_manager.json > $path/string_json.json
 	if [ $? = 0 ]; then
-		echo "Collection convertida a String satisfactioriamente."
+		echo "Colección convertida a string satisfactioriamente."
 		createDefaultJSON
 	else
-		echo "Error al convertir la colección a string." 1>&2
+		echo "Error!!! al convertir la colección a string." 1>&2
 		exit 1
 	fi
 }
@@ -85,10 +85,10 @@ function updateJSON {
 	touch $path/complete_json.json
 	sed -e "s/content_json/$(sed -e 's/[\&/]/\\&/g' -e 's/$/\\n/' $path/string_json.json | tr -d '\n')/g" $path/default.json > $path/complete_json.json
 	if [ $? = 0 ]; then
-		echo "Collection convertida a String satisfactioriamente."
+		echo "Colección convertida a string satisfactioriamente."
 		uploadGist
 	else
-		echo "Error al convertir la Collection a String." 1>&2
+		echo "Error!!! al convertir la colección a string." 1>&2
 		exit 1
 	fi
 }
@@ -97,24 +97,25 @@ function uploadGist {
 	touch $path/upload.json
 	curl --user "$user:$password" --data @$path/complete_json.json -X POST https://api.github.com/gists > $path/upload.json
 	if [ $? = 0 ]; then
-		echo "Gist subido satisfactioriamente."
+		echo "Gist agregado a GitHub satisfactioriamente."
         id=$(grep -Eo '["][a-z,A-Z,0-9]{32}["]' $path/upload.json | grep -Eo '[a-z,A-Z,0-9]{32}')
 		mongo mongodb://localhost/$database <<EOF
-db.gists.insert({
+db.gists.insert(
+{
 	id: "$id",
     description: "$description",
     name: "$file_name"
 })
 EOF
         if [ $? = 0 ]; then
-            echo "Gist agregado satisfactioriamente."
+            echo "Gist agregado a la base de datos satisfactioriamente."
             rm -rf $path
         else
-            echo "Error al agregar el Gist." 1>&2
+            echo "Error!!! al agregar el Gist a la base de datos." 1>&2
             exit 1
         fi
 	else
-		echo "Error al subir el Gist." 1>&2
+		echo "Error!!! al agregar el Gist a GitHub." 1>&2
 		exit 1
 	fi
 }
@@ -123,6 +124,6 @@ EOF
 if [ $# -eq 6 ]; then
 	isEmptyCollection
 else
-	echo "Error, debes introducir seis parametros" 1>&2
+	echo "Error!!! debes introducir seis parametros." 1>&2
 	exit 1
 fi

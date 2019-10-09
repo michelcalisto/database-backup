@@ -47,7 +47,7 @@ function createEnviroment {
 function exportCollection {
 	mongoexport --db $database --collection $collection --out "$path/gist_manager.json" &>/dev/null
 	if [ $? = 0 ]; then
-		echo "Colección exportada satisfactoriamente"
+		echo "Colección exportada satisfactoriamente."
 		convertStringJSON
 	else
 		echo "Error!!! al exportar la colección." 1>&2
@@ -102,7 +102,7 @@ function uploadGist {
 	touch $path/upload.json
 	curl --user "$user:$password" --data @$path/complete_json.json -X PATCH https://api.github.com/gists/$id
 	if [ $? = 0 ]; then
-		echo "Gist en la base de datos actualizado satisfactioriamente."
+		echo "Gist de la base de datos actualizado satisfactioriamente."
         		mongo mongodb://localhost/$database <<EOF
 db.gists.update(
 {
@@ -115,14 +115,14 @@ db.gists.update(
 })
 EOF
         if [ $? = 0 ]; then
-            echo "Gist en GitHub actualizado satisfactioriamente."
+            echo "Gist de GitHub actualizado satisfactioriamente."
             rm -rf $path
         else
-            echo "Error!!! al actualizar el Gist." 1>&2
+            echo "Error!!! al actualizar el Gist de GitHub." 1>&2
             exit 1
         fi
 	else
-		echo "Error!!! al actualizar el Gist." 1>&2
+		echo "Error!!! al actualizar el Gist de la base de datos." 1>&2
 		exit 1
 	fi
 }
@@ -131,6 +131,6 @@ EOF
 if [ $# -eq 8 ]; then
 	isEmptyCollection
 else
-	echo "Error!!! debes introducir ocho parametros" 1>&2
+	echo "Error!!! debes introducir ocho parametros." 1>&2
 	exit 1
 fi

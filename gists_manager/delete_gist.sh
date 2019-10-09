@@ -17,13 +17,13 @@ function isEmptyCollection {
     if [ $? = 0 ]; then
         let count=`mongo $database --eval "db.gists.find().count()" --quiet` 
         if [ $count = 0 ]; then
-            echo "Error la coleción se encuentra vacía." 1>&2
+            echo "Error!!! la colección se encuentra vacía." 1>&2
 		    exit 1
         else
             deleteGist
         fi
 	else
-		echo "Error en la conexion con la base de datos." 1>&2
+		echo "Error!!! en la conexión con la base de datos." 1>&2
 		exit 1
 	fi
 }
@@ -31,9 +31,9 @@ function isEmptyCollection {
 function deleteGist {
     curl --user "$user:$password" -X DELETE https://api.github.com/gists/$id
     if [ $? = 0 ]; then
-		echo "Gist eliminado satisfactioriamente."
+		echo "Gist eliminado de GitHub satisfactioriamente."
 	else
-		echo "Error al eliminar el Gist." 1>&2
+		echo "Error!!! al eliminar el Gist de GitHub." 1>&2
 		exit 1
 	fi
 }
@@ -42,6 +42,6 @@ function deleteGist {
 if [ $# -eq 4 ]; then
 	isEmptyCollection
 else
-	echo "Error, debes introducir cuatro parametros" 1>&2
+	echo "Erro!!! debes introducir cuatro parametros." 1>&2
 	exit 1
 fi
