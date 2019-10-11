@@ -57,7 +57,10 @@ function exportCollection {
 
 function convertStringJSON {
     touch $path/string_json.json
-	sed -e 's/"/\\"/g' -e 's/0}/0}\\n/g' $path/gist_manager.json > $path/string_json.json
+	line=$(wc -l < $path/gist_manager.json)
+    num=$(($line-1))
+    sed -e 's/"/\\"/g' -e 's/0}/0},\\n/g' $path/gist_manager.json | head -n $num > $path/string_json.json
+    sed -e 's/"/\\"/g' $path/gist_manager.json | tail -1 >> $path/string_json.json
 	if [ $? = 0 ]; then
 		echo "Colección convertida a string satisfactioriamente."
 		createDefaultJSON
@@ -77,7 +80,7 @@ function createDefaultJSON {
   "files": {
     "$file_name_old.json": null,
     "$file_name.json": {
-      "content": "content_json"
+      "content": "[content_json]"
     }
   }
 }
