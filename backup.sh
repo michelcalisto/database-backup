@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Title		: database_backup.sh
+# Title		: backup.sh
 # Description	: Script para el respaldo y compresión de bases de datos.
 # Author	: Michel Calisto
 # Version	: 0.1

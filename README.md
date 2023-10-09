@@ -1,11 +1,21 @@
-# Scripts_collection
+# Database backup script
 
 ### Descripción
 
-Colección de Scripts realizada a base de Scripts desarrollados para diferentes proyectos en los cuales se requería una automatización a nivel de Sistema Operativo, entre los que se encuentran el respaldo de base de datos y el manejo de gists. Para más información leer la [scripts_collection wiki](https://github.com/laloinsane/scripts_collection/wiki).
+Script para el respaldo y compresión de bases de datos.
 
-## Contenido
+### Construcción / Modificación
 
-- [Database](https://github.com/laloinsane/scripts_collection/wiki/Database)
-- Gists
+Antes de utilizar el script, diríjase al directorio donde se descargo el repositorio, ábralo con su editor de texto favorito 
+y remplaze los textos ```"xxx"``` de la function respaldar, en el siguiente orden: usuario de mysql, password de mysql y finalmente el nombre de la base de datos que se desea respaldar. Por último asígnele permisos de ejecución al script.
 
+``` bash
+# dar permisos de ejecución al script
+sudo chmod 775 backup.sh
+```
+
+### Utilización
+
+Para utilizar el script, diríjase al directorio donde se descargo el repositorio, luego con la ayuda de la 
+consola ejecute ```./backup.sh "ruta" "carpeta"``` siendo carpeta, el directorio donde se alojarán los respaldos, 
+mientras que ruta es donde se ubicará carpeta.
