@@ -1,4 +1,4 @@
-# Database backup script
+# Database backup
 
 Script para el respaldo y compresión de bases de datos.
 
